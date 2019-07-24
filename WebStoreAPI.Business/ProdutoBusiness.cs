@@ -14,10 +14,20 @@ namespace WebStoreAPI.Business
             _produtorepository = new ProdutoRepository();
         }
 
+        public Produto FindByKey(Guid key)
+        {
+            return _produtorepository.FindByKey(key);
+        }
+
+        public Produto FindByString(string marca)
+        {
+            return _produtorepository.FindByString(marca);
+        }
+
         public bool Add(Produto produto)
         {
-
-            return _produtorepository.Add(produto);
+            _produtorepository.Add(produto);
+            return true;
         }
 
         public List<Produto> GetList()

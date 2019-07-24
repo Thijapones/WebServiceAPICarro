@@ -15,10 +15,20 @@ namespace WebStoreAPI.Business
             _carrorepository = new CarroRepository();
         }
 
+        public Carro FindByKey(Guid key)
+        {
+            return _carrorepository.FindByKey(key);
+        }
+
+        public Carro FindByString(string marca)
+        {
+            return _carrorepository.FindByString(marca);
+        }
+
         public bool Add(Carro carro)
         {
-
-            return _carrorepository.Add(carro);
+            _carrorepository.Add(carro);
+            return true;
         }
 
         public List<Carro> GetList()

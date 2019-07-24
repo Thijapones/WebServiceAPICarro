@@ -7,6 +7,8 @@ namespace WebStoreAPI.Business.Interfaces
 {
     public interface IProdutoBusiness
     {
+        Produto FindByKey(Guid key);
+
         bool Add(Produto produto);
 
         List<Produto> GetList();

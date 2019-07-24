@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using WebStoreAPI.Business;
 using WebStoreAPI.Domain;
 using WebStoreAPI.Services;
+using WebStoreAPI.Services.Interfaces;
 
 namespace WebStoreAPI.Controllers
 {
@@ -14,7 +16,13 @@ namespace WebStoreAPI.Controllers
     [ApiController]
     public class CarroController : ControllerBase
     {
-        private readonly CarroServices _carroServices;
+        private readonly ICarroServices _carroServices;
+        private readonly ILogger<CarroController> _logger;
+        public CarroController(ICarroServices carroServices, ILogger<CarroController> logger)
+        {
+            _carroServices = carroServices;
+            _logger = logger;
+        }
         public CarroController()
         {
             var carrobusiness = new CarroBusinnes();
@@ -25,13 +33,74 @@ namespace WebStoreAPI.Controllers
         [HttpGet]
         public ActionResult<List<Carro>> Get()
         {
-            return _carroServices.List();
+            try
+            {
+                _logger.LogInformation("Received get request");
+
+                return Ok(_carroServices.List());
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, exception.Message);
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpGet("{key}")]
+        public ActionResult<Carro> Get([FromRoute] Guid key)
+        {
+            try
+            {
+                _logger.LogInformation("Received get request");
+
+                return Ok(_carroServices.FindByKey(key));
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, exception.Message);
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpGet("{marca}")]
+        public ActionResult<Carro> GetMarca([FromRoute] String marca)
+        {
+            try
+            {
+                _logger.LogInformation("Received get request");
+
+                return Ok(_carroServices.FindByString(marca));
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, exception.Message);
+                return new StatusCodeResult(500);
+            }
         }
 
         [HttpPost]
-        public void Post([FromBody] Carro carro)
+        public ActionResult<string> Post([FromBody] Carro carro)
         {
-            _carroServices.Insert(carro);
+            try
+            {
+                _logger.LogInformation("Received post request");
+
+                if (ModelState.IsValid)
+                {
+                    _carroServices.Insert(carro);
+
+                    return Ok("success");
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                }
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, exception.Message);
+                return new StatusCodeResult(500);
+            }
         }
     }
 }

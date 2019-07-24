@@ -7,6 +7,11 @@ namespace WebStoreAPI.Business.Interfaces
 {
     public interface ICarroBusiness
     {
+
+        Carro FindByKey(Guid key);
+
+        Carro FindByString(string Marca);
+
         bool Add(Carro produto);
 
         List<Carro> GetList();
