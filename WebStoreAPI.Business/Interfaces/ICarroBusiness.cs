@@ -15,5 +15,8 @@ namespace WebStoreAPI.Business.Interfaces
         bool Add(Carro produto);
 
         List<Carro> GetList();
+
+        List<Carro> GetAll();
+
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using WebStoreAPI.Domain;
 using WebStoreAPI.Domain.Abstract;
 using WebStoreAPI.Repository.Interfaces;
+using WebStoreAPI.Repository.Utilities;
+using Dapper;
 
 namespace WebStoreAPI.Repository
 {
@@ -29,6 +31,12 @@ namespace WebStoreAPI.Repository
         public T FindByKey(Guid key)
         {
             return _data.FirstOrDefault(w => w.Key == key);
+        }
+
+        public List<T> GetAll(string query)
+        {
+            var conn = ConnectionFactory.GetConnection();
+            return conn.Query<T>(query).ToList();
         }
 
         public T FindByString(string text)

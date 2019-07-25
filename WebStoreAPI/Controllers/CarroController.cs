@@ -23,12 +23,6 @@ namespace WebStoreAPI.Controllers
             _carroServices = carroServices;
             _logger = logger;
         }
-        public CarroController()
-        {
-            var carrobusiness = new CarroBusinnes();
-
-            _carroServices = new CarroServices(carrobusiness);
-        }
 
         [HttpGet]
         public ActionResult<List<Carro>> Get()
@@ -37,7 +31,7 @@ namespace WebStoreAPI.Controllers
             {
                 _logger.LogInformation("Received get request");
 
-                return Ok(_carroServices.List());
+                return Ok(_carroServices.GetAll());
             }
             catch (Exception exception)
             {
@@ -46,7 +40,7 @@ namespace WebStoreAPI.Controllers
             }
         }
 
-        [HttpGet("{key}")]
+        [HttpGet("{key:guid}")]
         public ActionResult<Carro> Get([FromRoute] Guid key)
         {
             try
@@ -63,7 +57,7 @@ namespace WebStoreAPI.Controllers
         }
 
         [HttpGet("{marca}")]
-        public ActionResult<Carro> GetMarca([FromRoute] String marca)
+        public ActionResult<Carro> GetMarca([FromRoute] string marca)
         {
             try
             {

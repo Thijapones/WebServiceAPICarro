@@ -14,5 +14,7 @@ namespace WebStoreAPI.Services.Interfaces
         List<Carro> List();
 
         List<Carro> Insert(Carro carro);
+
+        List<Carro> GetAll();
     }
 }

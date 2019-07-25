@@ -10,9 +10,9 @@ namespace WebStoreAPI.Business
     public class CarroBusinnes : ICarroBusiness
     {
         CarroRepository _carrorepository;
-        public CarroBusinnes()
+        public CarroBusinnes(CarroRepository carroRepository)
         {
-            _carrorepository = new CarroRepository();
+            _carrorepository = carroRepository;
         }
 
         public Carro FindByKey(Guid key)
@@ -34,6 +34,11 @@ namespace WebStoreAPI.Business
         public List<Carro> GetList()
         {
             return _carrorepository.GetList();
+        }
+
+        public List<Carro> GetAll()
+        {
+            return _carrorepository.GetAll("select * from Carro");
         }
     }
 }

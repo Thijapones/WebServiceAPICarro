@@ -37,5 +37,10 @@ namespace WebStoreAPI.Services
         {
             return _carroBusiness.GetList();
         }
+
+        public List<Carro> GetAll()
+        {
+            return _carroBusiness.GetAll();
+        }
     }
 }

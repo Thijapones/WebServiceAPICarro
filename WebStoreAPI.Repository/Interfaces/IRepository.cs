@@ -12,6 +12,8 @@ namespace WebStoreAPI.Repository.Interfaces
 
         T FindByString(string text);
 
+        List<T> GetAll(string query);
+
         List<T> GetList();
 
         void Add(T obj);
